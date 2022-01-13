@@ -1,22 +1,19 @@
-package com.fernandesDeveloper.sdsmovie.entities;
+package com.fernandesDeveloper.sdsmovie.dto;
 
-import com.sun.istack.NotNull;
+import com.fernandesDeveloper.sdsmovie.entities.Movie;
 
-import javax.persistence.*;
+public class MovieDTO {
 
-@Entity
-@Table(name = "tb_movie")
-public class Movie {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private Double score;
     private Integer count;
     private String image;
 
-    public Movie(Long id, String title, Double score, Integer count, String image) {
+    public MovieDTO() {
+    }
+
+    public MovieDTO(Long id, String title, Double score, Integer count, String image) {
         this.id = id;
         this.title = title;
         this.score = score;
@@ -24,7 +21,12 @@ public class Movie {
         this.image = image;
     }
 
-    public Movie() {
+    public MovieDTO(Movie movie){
+        this.id = movie.getId();
+        this.title = movie.getTitle();
+        this.score = movie.getScore();
+        this.count = movie.getCount();
+        this.image = movie.getImage();
     }
 
     public Long getId() {
