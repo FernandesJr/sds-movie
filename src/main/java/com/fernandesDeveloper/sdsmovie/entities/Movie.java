@@ -1,8 +1,8 @@
 package com.fernandesDeveloper.sdsmovie.entities;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_movie")
@@ -16,15 +16,17 @@ public class Movie {
     private Integer count;
     private String image;
 
+    @OneToMany(mappedBy = "id.movie", cascade = CascadeType.ALL)
+    private Set<Score> scores = new HashSet<>(); //Set para que nenhum objeto se repita
+
+    public Movie() {}
+
     public Movie(Long id, String title, Double score, Integer count, String image) {
         this.id = id;
         this.title = title;
         this.score = score;
         this.count = count;
         this.image = image;
-    }
-
-    public Movie() {
     }
 
     public Long getId() {
@@ -65,5 +67,9 @@ public class Movie {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
     }
 }

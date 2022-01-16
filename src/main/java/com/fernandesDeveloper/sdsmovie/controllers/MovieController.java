@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController //Quando é construção de API usa-se o Rest que é diferente do esteriotipo Controller
+@RestController //Quando é uma construção de API usa-se o Rest que é diferente do esteriotipo Controller
 @RequestMapping("/movie")
 public class MovieController {
 
