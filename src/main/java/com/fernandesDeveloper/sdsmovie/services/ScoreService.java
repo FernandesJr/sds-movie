@@ -31,6 +31,7 @@ public class ScoreService {
     public MovieDTO saveScore(ScoreDTO scoreDTO){
 
         User user = userRepository.findByEmail(scoreDTO.getEmail());
+        //Verificar se o user se encontra na base de dados, caso não tenha será cadastrado. Caso já tenha na Base será apenas uma atualização de Score
         if(user == null){
             user = userRepository.saveAndFlush(new User(scoreDTO.getEmail()));
         }
@@ -38,23 +39,18 @@ public class ScoreService {
         Movie movie = movieRepository.findById(scoreDTO.getMovieId()).get();
 
         Score score =  new Score();
-        score.setUser(user);
+        score.setUser(user); //O próprio Jpa não permite ter relacionamentos duplicados, então caso o user já tenha relacionamento com o mesmo movie ele apenas atualiza o valor.
         score.setMovie(movie);
         score.setValue(scoreDTO.getScore());
-        scoreRepository.save(score);
+        scoreRepository.saveAndFlush(score);
 
-        movie = movieRepository.findById(scoreDTO.getMovieId()).get();
-
-        double sum = 0.0;
+        Double sum = 0.0;
         for(Score s : movie.getScores()){
             sum = sum + s.getValue();
         }
-        double media = sum / movie.getScores().size();
+        Double media = sum / movie.getScores().size();
         movie.setScore(media);
         movie.setCount(movie.getScores().size());
-
-        movie = movieRepository.saveAndFlush(movie);
-
 
         return new MovieDTO(movie);
     }

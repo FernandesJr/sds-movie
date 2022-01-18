@@ -16,7 +16,7 @@ public class Movie {
     private Integer count;
     private String image;
 
-    @OneToMany(mappedBy = "id.movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.movie")
     private Set<Score> scores = new HashSet<>(); //Set para que nenhum objeto se repita
 
     public Movie() {}
